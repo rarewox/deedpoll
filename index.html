@@ -1,0 +1,2179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NPC DeedPoll Portal — Nigeria Population Commission</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ───────────────────────────────────────────
+       RESET & BASE
+    ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:       #1B4332;
+      --green-mid:   #2D6A4F;
+      --green-light: #40916C;
+      --gold:        #C9A84C;
+      --gold-light:  #E4C16F;
+      --cream:       #F8F6F1;
+      --cream-dark:  #EDE9E0;
+      --text-dark:   #1A1A18;
+      --text-body:   #3A3A36;
+      --text-muted:  #6B6B62;
+      --border:      rgba(27, 67, 50, 0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text-body);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ───────────────────────────────────────────
+       TYPOGRAPHY HELPERS
+    ─────────────────────────────────────────── */
+    .serif { font-family: 'Playfair Display', serif; }
+
+    h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; color: var(--text-dark); }
+
+    /* ───────────────────────────────────────────
+       LAYOUT HELPERS
+    ─────────────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ───────────────────────────────────────────
+       SCROLL REVEAL
+    ─────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.22s; }
+    .reveal-delay-3 { transition-delay: 0.34s; }
+
+    /* ───────────────────────────────────────────
+       NAVBAR
+    ─────────────────────────────────────────── */
+    #navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(27, 67, 50, 0.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+      transition: box-shadow 0.3s;
+    }
+    #navbar.scrolled {
+      box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      gap: 24px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .nav-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .nav-brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .nav-brand-text span:first-child {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.01em;
+    }
+    .nav-brand-text span:last-child {
+      font-size: 0.67rem;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.06em;
+      font-weight: 400;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+    }
+    .nav-links li a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.78);
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links li a:hover {
+      color: var(--gold);
+      background: rgba(201,168,76,0.08);
+    }
+
+    .nav-cta {
+      background: var(--gold) !important;
+      color: var(--green) !important;
+      font-weight: 600 !important;
+      padding: 8px 18px !important;
+      border-radius: 6px !important;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+    .nav-cta:hover {
+      background: var(--gold-light) !important;
+      transform: translateY(-1px);
+    }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile {
+      display: none;
+      background: rgba(22, 55, 40, 0.99);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 16px 24px 20px;
+    }
+    .nav-mobile.open { display: block; }
+    .nav-mobile a {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.82);
+      padding: 11px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      transition: color 0.2s;
+    }
+    .nav-mobile a:hover { color: var(--gold); }
+    .nav-mobile a:last-child { border-bottom: none; }
+
+    /* ───────────────────────────────────────────
+       HERO
+    ─────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      background-color: var(--green);
+      overflow: hidden;
+      padding: 100px 0 90px;
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Geometric background pattern */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          60deg,
+          transparent,
+          transparent 60px,
+          rgba(255,255,255,0.025) 60px,
+          rgba(255,255,255,0.025) 61px
+        ),
+        repeating-linear-gradient(
+          -60deg,
+          transparent,
+          transparent 60px,
+          rgba(255,255,255,0.025) 60px,
+          rgba(255,255,255,0.025) 61px
+        );
+      pointer-events: none;
+    }
+
+
+    /* Gold accent blob top-left */
+    .hero-blob {
+      position: absolute;
+      top: -120px;
+      left: -120px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-layout {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-content {
+      position: relative;
+    }
+
+    /* Nigeria Map SVG panel */
+    .hero-map-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-map-wrap object,
+    .hero-map-wrap .hero-map-svg {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-map-glow {
+      position: absolute;
+      inset: -40px;
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.1) 0%, transparent 68%);
+      pointer-events: none;
+    }
+
+    .hero-map-svg {
+      width: 100%;
+      max-width: 420px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 20px 60px rgba(0,0,0,0.35));
+      animation: map-float 5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .hero-map-overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      animation: map-float 5s ease-in-out infinite;
+    }
+
+    @keyframes map-float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-12px); }
+    }
+
+    @media (max-width: 960px) {
+      .hero-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .hero-map-wrap {
+        order: -1;
+        max-width: 280px;
+        margin: 0 auto;
+      }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .hero-badge span {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--gold-light);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.12;
+      margin-bottom: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    #flipWord {
+      display: inline-block;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      transform-origin: bottom center;
+    }
+    #flipWord.flip-out {
+      opacity: 0;
+      transform: rotateX(90deg) translateY(-8px);
+    }
+    #flipWord.flip-in {
+      opacity: 0;
+      transform: rotateX(-90deg) translateY(8px);
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 14px 26px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: background 0.2s, color 0.2s, transform 0.15s, box-shadow 0.2s;
+      letter-spacing: 0.01em;
+    }
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--green);
+      border-color: var(--gold);
+    }
+    .btn-gold:hover {
+      background: var(--gold-light);
+      border-color: var(--gold-light);
+      box-shadow: 0 8px 24px rgba(201,168,76,0.35);
+    }
+
+    .btn-outline-white {
+      background: transparent;
+      color: #fff;
+      border-color: rgba(255,255,255,0.4);
+    }
+    .btn-outline-white:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .btn-green {
+      background: var(--green);
+      color: #fff;
+      border-color: var(--green);
+    }
+    .btn-green:hover {
+      background: var(--green-mid);
+      border-color: var(--green-mid);
+      box-shadow: 0 8px 24px rgba(27,67,50,0.3);
+    }
+
+    .btn-outline-green {
+      background: transparent;
+      color: var(--green);
+      border-color: var(--green);
+    }
+    .btn-outline-green:hover {
+      background: rgba(27,67,50,0.06);
+    }
+
+    .btn-arrow {
+      font-size: 1rem;
+      transition: transform 0.2s;
+    }
+    .btn:hover .btn-arrow { transform: translateX(4px); }
+
+    .hero-trust {
+      margin-top: 52px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: center;
+    }
+    .hero-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 400;
+    }
+    .hero-trust-item .check {
+      width: 18px;
+      height: 18px;
+      background: rgba(201,168,76,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ───────────────────────────────────────────
+       LEADERSHIP STATEMENTS
+    ─────────────────────────────────────────── */
+    #leadership {
+      padding: 96px 0;
+      background: var(--cream);
+    }
+
+    .leadership-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    /* Each row: image + text side by side */
+    .leadership-row {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 0;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(27,67,50,0.07);
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .leadership-row:hover {
+      box-shadow: 0 14px 44px rgba(27,67,50,0.12);
+      transform: translateY(-3px);
+    }
+
+    /* Chairman row: text first, then image — scaled down */
+    .leadership-row.reverse {
+      grid-template-columns: 1fr 380px;
+    }
+    .leadership-row.reverse .leadership-photo {
+      min-height: 260px;
+    }
+    .leadership-row.reverse .leadership-body {
+      padding: 24px 28px 24px;
+    }
+    .leadership-row.reverse .leadership-body blockquote {
+      font-size: 0.875rem;
+      line-height: 1.75;
+    }
+    .leadership-row.reverse .quote-mark {
+      font-size: 3.2rem;
+      margin-bottom: 8px;
+    }
+    .leadership-row.reverse .leadership-attribution strong {
+      font-size: 0.88rem;
+    }
+    .leadership-row.reverse .leadership-attribution span {
+      font-size: 0.76rem;
+    }
+    .leadership-row.reverse .leadership-img-wrap {
+      order: 2;
+    }
+    .leadership-row.reverse .leadership-body {
+      order: 1;
+    }
+
+    .leadership-img-wrap {
+      position: relative;
+      min-height: 340px;
+      background: linear-gradient(160deg, #dce8dc 0%, #c4d9c4 100%);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .leadership-row.reverse .leadership-img-wrap {
+      background: linear-gradient(160deg, #f0ead6 0%, #e0d0a4 100%);
+    }
+
+    .leadership-photo {
+      width: 100%;
+      height: 100%;
+      min-height: 340px;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+
+    .leadership-img-placeholder {
+      width: 100%;
+      height: 100%;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .leadership-img-placeholder svg {
+      width: 110px;
+      height: 110px;
+      opacity: 0.85;
+    }
+    .leadership-img-placeholder span {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: rgba(27,67,50,0.4);
+    }
+    .leadership-row.reverse .leadership-img-placeholder span {
+      color: rgba(140,100,20,0.45);
+    }
+
+    .leadership-badge {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: var(--green);
+      color: #fff;
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+    }
+    .leadership-row.reverse .leadership-badge {
+      left: auto;
+      right: 16px;
+    }
+    .leadership-badge.npc-badge {
+      background: var(--gold);
+      color: var(--green);
+    }
+
+    .leadership-body {
+      padding: 40px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .quote-mark {
+      font-family: 'Playfair Display', serif;
+      font-size: 4.5rem;
+      line-height: 0.6;
+      color: var(--green);
+      opacity: 0.15;
+      margin-bottom: 18px;
+      user-select: none;
+    }
+    .quote-mark--gold { color: var(--gold); }
+
+    .leadership-body blockquote {
+      font-size: 0.915rem;
+      color: var(--text-body);
+      line-height: 1.85;
+      font-style: italic;
+      border: none;
+      padding: 0;
+      margin: 0 0 28px;
+    }
+
+    .leadership-attribution {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .attr-line {
+      width: 3px;
+      height: 38px;
+      background: var(--green);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .attr-line--gold { background: var(--gold); }
+
+    .leadership-attribution strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 3px;
+    }
+    .leadership-attribution span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+
+    /* ───────────────────────────────────────────
+       SERVICE CARDS
+    ─────────────────────────────────────────── */
+    #services {
+      padding: 96px 0 80px;
+      background: var(--cream);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .section-header h2 {
+      font-size: clamp(1.9rem, 3.5vw, 2.7rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+    .section-header p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .service-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 30px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.3s, transform 0.3s;
+      cursor: default;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--green);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .service-card:hover {
+      box-shadow: 0 16px 48px rgba(27,67,50,0.12);
+      transform: translateY(-4px);
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .card-icon-wrap {
+      width: 52px;
+      height: 52px;
+      background: rgba(27,67,50,0.07);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    .service-card.featured .card-icon-wrap {
+      background: rgba(201,168,76,0.12);
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      background: rgba(27,67,50,0.07);
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+    }
+    .service-card.featured .card-tag {
+      color: #8a6a1a;
+      background: rgba(201,168,76,0.15);
+    }
+
+    .service-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .card-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .card-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .step-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .step-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.855rem;
+      color: var(--text-body);
+      line-height: 1.55;
+    }
+    .step-num {
+      width: 22px;
+      height: 22px;
+      background: var(--green);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .service-card.featured .step-num {
+      background: var(--gold);
+      color: var(--green);
+    }
+
+    /* ───────────────────────────────────────────
+       REQUIRED DOCUMENTS
+    ─────────────────────────────────────────── */
+    #documents {
+      padding: 96px 0;
+      background: var(--cream-dark);
+    }
+
+    .documents-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .documents-left h2 {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .documents-left p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .doc-note {
+      background: #fff;
+      border-left: 3px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      font-size: 0.835rem;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+    .doc-note strong { color: var(--green); }
+
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(27,67,50,0.06);
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .checklist-item:last-child { border-bottom: none; }
+    .checklist-item:hover { background: rgba(27,67,50,0.02); }
+
+    .check-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .check-icon svg {
+      width: 13px;
+      height: 13px;
+      stroke: #fff;
+      stroke-width: 2.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .checklist-item.optional .check-icon {
+      background: rgba(27,67,50,0.15);
+    }
+    .checklist-item.optional .check-icon svg { stroke: var(--green); }
+
+    .checklist-text strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 2px;
+    }
+    .checklist-text span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ───────────────────────────────────────────
+       HOW IT WORKS — PROCESS TIMELINE
+    ─────────────────────────────────────────── */
+    #process {
+      padding: 96px 0;
+      background: var(--cream);
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+      margin-top: 60px;
+    }
+    .process-grid::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: calc(12.5% + 20px);
+      right: calc(12.5% + 20px);
+      height: 1px;
+      background: linear-gradient(90deg, var(--green) 0%, var(--gold) 100%);
+      opacity: 0.25;
+      z-index: 0;
+    }
+
+    .process-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .process-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--green);
+      color: #fff;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      border: 4px solid var(--cream);
+      box-shadow: 0 0 0 1px var(--green);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .process-step:hover .process-num {
+      background: var(--gold);
+      color: var(--green);
+      transform: scale(1.1);
+    }
+
+    .process-step h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .process-step p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ───────────────────────────────────────────
+       FAQ
+    ─────────────────────────────────────────── */
+    #faq {
+      padding: 96px 0;
+      background: var(--cream-dark);
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 48px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item:last-child,
+    .faq-item:nth-last-child(2):nth-child(odd) {
+      border-bottom: none;
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 22px 0;
+      text-align: left;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.45;
+      transition: color 0.2s;
+    }
+    .faq-question:hover { color: var(--green); }
+    .faq-question[aria-expanded="true"] { color: var(--green); }
+
+    .faq-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      flex-shrink: 0;
+      position: relative;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .faq-icon::before,
+    .faq-icon::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      background: var(--green);
+      border-radius: 2px;
+      transition: transform 0.28s ease, opacity 0.28s ease;
+    }
+    .faq-icon::before {
+      width: 10px;
+      height: 1.5px;
+      transform: translate(-50%, -50%);
+    }
+    .faq-icon::after {
+      width: 1.5px;
+      height: 10px;
+      transform: translate(-50%, -50%);
+    }
+    .faq-question[aria-expanded="true"] .faq-icon {
+      background: var(--green);
+      border-color: var(--green);
+    }
+    .faq-question[aria-expanded="true"] .faq-icon::before,
+    .faq-question[aria-expanded="true"] .faq-icon::after {
+      background: #fff;
+    }
+    .faq-question[aria-expanded="true"] .faq-icon::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+      opacity: 0;
+    }
+
+    .faq-answer {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.38s ease, padding 0.28s ease;
+    }
+    .faq-answer.open {
+      max-height: 300px;
+    }
+    .faq-answer p {
+      padding-bottom: 22px;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+    .faq-answer p a {
+      color: var(--green);
+      text-decoration: underline;
+      text-decoration-color: rgba(27,67,50,0.3);
+    }
+    .faq-answer p a:hover { text-decoration-color: var(--green); }
+
+
+    /* ───────────────────────────────────────────
+       CTA BANNER
+    ─────────────────────────────────────────── */
+    #cta {
+      padding: 80px 0;
+      background: var(--green);
+      position: relative;
+      overflow: hidden;
+    }
+    #cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 40px,
+          rgba(255,255,255,0.02) 40px,
+          rgba(255,255,255,0.02) 41px
+        );
+      pointer-events: none;
+    }
+    #cta::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .cta-inner .section-label { color: rgba(201,168,76,0.85); }
+
+    .cta-inner h2 {
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+    .cta-inner p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 480px;
+      margin: 0 auto 38px;
+      line-height: 1.7;
+    }
+
+    .cta-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cta-help-link {
+      margin-top: 26px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .cta-help-link a {
+      color: var(--gold-light);
+      text-decoration: underline;
+      text-decoration-color: rgba(201,168,76,0.35);
+      transition: color 0.2s;
+    }
+    .cta-help-link a:hover { color: var(--gold); }
+
+    /* ───────────────────────────────────────────
+       FOOTER
+    ─────────────────────────────────────────── */
+    #footer {
+      background: #0f2a1e;
+      padding: 56px 0 32px;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.875rem;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 44px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .footer-logo-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .footer-logo-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .footer-logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+    .footer-logo-text strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      color: #fff;
+      font-weight: 700;
+    }
+    .footer-logo-text span {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-tagline {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
+      max-width: 240px;
+    }
+
+    .footer-col h5 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-col ul li a {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--gold-light); }
+
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .footer-bottom p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.3);
+    }
+    .footer-legal {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-legal a {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+      transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: var(--gold-light); }
+
+    /* ───────────────────────────────────────────
+       RESPONSIVE
+    ─────────────────────────────────────────── */
+
+    /* ── Tablet (≤ 960px) ── */
+    @media (max-width: 960px) {
+      .container { padding: 0 20px; }
+
+      /* Nav */
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      /* Hero */
+      #hero { padding: 80px 0 72px; min-height: auto; }
+      .hero-title { font-size: 2.4rem; }
+
+      /* Leadership */
+      .leadership-row,
+      .leadership-row.reverse {
+        grid-template-columns: 1fr;
+      }
+      .leadership-row.reverse .leadership-img-wrap,
+      .leadership-row.reverse .leadership-body { order: unset; }
+      .leadership-img-wrap,
+      .leadership-img-placeholder,
+      .leadership-photo { min-height: 240px; }
+      .leadership-row.reverse .leadership-badge { left: 16px; right: auto; }
+      .leadership-body { padding: 28px 28px 32px; }
+      .leadership-stack { gap: 32px; }
+
+      /* Services */
+      .cards-grid {
+        grid-template-columns: 1fr;
+        max-width: 520px;
+        margin: 0 auto;
+      }
+
+      /* Documents */
+      .documents-inner { grid-template-columns: 1fr; gap: 36px; }
+
+      /* Process */
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px 24px;
+      }
+      .process-grid::before { display: none; }
+
+      /* FAQ */
+      .faq-grid { grid-template-columns: 1fr; gap: 0; }
+      .faq-item:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid var(--border); }
+      .faq-item:last-child { border-bottom: none; }
+
+      /* Footer */
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+
+    /* ── Mobile (≤ 600px) ── */
+    @media (max-width: 600px) {
+      .container { padding: 0 16px; }
+
+      /* Nav */
+      .nav-inner { height: 60px; }
+      .nav-brand-text span:last-child { display: none; }
+
+      /* Hero */
+      #hero { padding: 60px 0 56px; }
+      #hero::after { display: none; }
+      .hero-badge { font-size: 0.68rem; }
+      .hero-title { font-size: 2rem; letter-spacing: -0.02em; }
+      .hero-sub { font-size: 1rem; }
+      .hero-ctas { flex-direction: column; align-items: stretch; }
+      .hero-ctas .btn { justify-content: center; width: 100%; }
+      .hero-trust { gap: 12px; flex-wrap: wrap; }
+      .hero-trust-item { font-size: 0.78rem; }
+
+      /* Section spacing */
+      #leadership, #services, #documents, #process, #faq { padding: 56px 0; }
+      .section-header { margin-bottom: 36px; }
+      .section-header h2 { font-size: 1.55rem; }
+      .section-header p { font-size: 0.9rem; }
+
+      /* Leadership */
+      .leadership-img-wrap,
+      .leadership-img-placeholder,
+      .leadership-photo { min-height: 200px; }
+      .leadership-body { padding: 22px 20px 26px; }
+      .leadership-body blockquote { font-size: 0.86rem; line-height: 1.75; }
+      .quote-mark { font-size: 3rem; margin-bottom: 10px; }
+      .leadership-attribution strong { font-size: 0.82rem; }
+      .leadership-stack { gap: 24px; }
+
+      /* Service cards */
+      .service-card { padding: 24px 20px; }
+      .cards-grid { max-width: 100%; }
+
+      /* Documents checklist */
+      .checklist-item { padding: 16px 18px; gap: 12px; }
+      .checklist-text strong { font-size: 0.85rem; }
+      .checklist-text span { font-size: 0.76rem; }
+      .doc-note { font-size: 0.8rem; }
+
+      /* Process */
+      .process-grid { grid-template-columns: 1fr; gap: 28px; }
+      .process-step { align-items: flex-start; text-align: left; flex-direction: row; gap: 16px; }
+      .process-num { flex-shrink: 0; margin-bottom: 0; }
+      .process-step h4 { margin-bottom: 4px; }
+
+      /* FAQ */
+      .faq-question { font-size: 0.9rem; padding: 18px 0; }
+      .faq-answer p { font-size: 0.84rem; }
+
+      /* CTA */
+      #cta { padding: 56px 0; }
+      .cta-inner h2 { font-size: 1.7rem; }
+      .cta-buttons { flex-direction: column; align-items: stretch; }
+      .cta-buttons .btn { justify-content: center; width: 100%; }
+
+      /* Footer */
+      .footer-top { grid-template-columns: 1fr; gap: 28px; padding-bottom: 32px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .footer-legal { flex-wrap: wrap; gap: 14px; }
+      #footer { padding: 44px 0 28px; }
+    }
+
+    /* ── Small mobile (≤ 380px) ── */
+    @media (max-width: 380px) {
+      .hero-title { font-size: 1.75rem; }
+      .btn { font-size: 0.85rem; padding: 12px 18px; }
+      .nav-logo { width: 36px; height: 36px; font-size: 0.85rem; }
+      .nav-brand-text span:first-child { font-size: 0.88rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════════ -->
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#" class="nav-brand">
+          <div class="nav-logo"><img src="image/NPCLogo.webp" alt="Nigeria Population Commission Logo" /></div>
+          <div class="nav-brand-text">
+            <span>DeedPoll Portal</span>
+            <span>Nigeria Population Commission</span>
+          </div>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#services">How It Works</a></li>
+          <li><a href="#documents">Documents</a></li>
+          <li><a href="#verify">Verify Certificate</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#footer">Contact</a></li>
+          <li><a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener" class="nav-cta">Begin Registration</a></li>
+        </ul>
+
+        <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+      <a href="#hero">Home</a>
+      <a href="#services">How It Works</a>
+      <a href="#documents">Documents</a>
+      <a href="#verify">Verify Certificate</a>
+      <a href="#faq">FAQ</a>
+      <a href="#footer">Contact</a>
+      <a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener" style="color: var(--gold-light); font-weight: 600;">Begin Registration →</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════ -->
+  <section id="hero">
+    <div class="hero-blob"></div>
+    <div class="container">
+      <div class="hero-layout">
+
+        <!-- LEFT: Text content -->
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            <span>Official Government Service</span>
+          </div>
+
+          <h1 class="hero-title">
+            Change Your Name.<br />
+            Update Your Identity.<br />
+            <em id="flipWord">Officially.</em>
+          </h1>
+
+          <p class="hero-sub">
+            Nigeria's official Deed Poll registration service — fast, secure, and government-backed.
+            Register virtually or in person through the Nigeria Population Commission.
+          </p>
+
+          <div class="hero-ctas">
+            <a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener" class="btn btn-gold">
+              Register Virtually <span class="btn-arrow">→</span>
+            </a>
+            <a href="#services" class="btn btn-outline-white">
+              Register In-Person <span class="btn-arrow">→</span>
+            </a>
+          </div>
+
+          <div class="hero-trust">
+            <div class="hero-trust-item">
+              <div class="check">✓</div>
+              Government-backed
+            </div>
+            <div class="hero-trust-item">
+              <div class="check">✓</div>
+              Legally recognised
+            </div>
+            <div class="hero-trust-item">
+              <div class="check">✓</div>
+              Virtual or In-person
+            </div>
+            <div class="hero-trust-item">
+              <div class="check">✓</div>
+              Certificate by email
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Full Nigeria Map -->
+        <div class="hero-map-wrap">
+          <div class="hero-map-glow"></div>
+          <object
+            class="hero-map-svg"
+            data="nigeria_outline.svg"
+            type="image/svg+xml"
+            aria-label="Full map of Nigeria showing all 36 states and FCT"
+          ></object>
+          <!-- Overlay: city markers & labels rendered on top -->
+          <svg class="hero-map-overlay" viewBox="0 0 744 600" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="dotGlow">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <!-- Abuja (FCT) capital marker ~370,330 -->
+            <circle cx="370" cy="330" r="7" fill="#C9A84C" opacity="0.95" filter="url(#dotGlow)"/>
+            <circle cx="370" cy="330" r="14" fill="none" stroke="#C9A84C" stroke-width="1.5" opacity="0.4"/>
+            <circle cx="370" cy="330" r="22" fill="none" stroke="#C9A84C" stroke-width="0.8" opacity="0.18"/>
+            <text x="385" y="327" font-family="DM Sans,sans-serif" font-size="13" font-weight="700" fill="#E4C16F" letter-spacing="0.06em">ABUJA</text>
+            <!-- Lagos ~148,510 -->
+            <circle cx="148" cy="510" r="4.5" fill="rgba(255,255,255,0.6)"/>
+            <text x="158" y="514" font-family="DM Sans,sans-serif" font-size="10" fill="rgba(255,255,255,0.5)" letter-spacing="0.05em">LAGOS</text>
+            <!-- Kano ~380,95 -->
+            <circle cx="385" cy="100" r="4" fill="rgba(255,255,255,0.5)"/>
+            <text x="394" y="104" font-family="DM Sans,sans-serif" font-size="10" fill="rgba(255,255,255,0.42)" letter-spacing="0.05em">KANO</text>
+            <!-- Port Harcourt ~390,520 -->
+            <circle cx="392" cy="520" r="3.5" fill="rgba(255,255,255,0.45)"/>
+            <text x="400" y="524" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(255,255,255,0.38)">PH</text>
+          </svg>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ═══════════════════════════════════════════
+       LEADERSHIP STATEMENTS
+  ═══════════════════════════════════════════ -->
+  <section id="leadership">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Official Statements</span>
+        <h2>A Word from Our Leaders</h2>
+        <p>Nigeria's leadership on the importance of official identity registration and the NPC DeedPoll initiative.</p>
+      </div>
+
+      <div class="leadership-stack">
+
+        <!-- President: image LEFT, text RIGHT -->
+        <div class="leadership-row reveal reveal-delay-1">
+          <div class="leadership-img-wrap">
+            <img src="image/TinubuPicture.jpg" alt="President Bola Ahmed Tinubu, President of the Federal Republic of Nigeria" class="leadership-photo" />
+          </div>
+          <div class="leadership-body">
+            <div class="quote-mark">&ldquo;</div>
+            <blockquote>
+              Every Nigerian deserves to exercise their fundamental right to an identity that reflects who they are. The NPC DeedPoll registration service is a direct expression of our administration's commitment to inclusive, accessible, and transparent governance. By digitalising and formalising the process of name change, we are ensuring that no citizen is left behind — whether they live in Lagos, Kano, Enugu, or the most rural communities across our federation. I urge all Nigerians who seek to update their names to take full advantage of this government-backed, secure, and officially recognised platform.
+            </blockquote>
+            <div class="leadership-attribution">
+              <div class="attr-line"></div>
+              <div>
+                <strong>President of the Federal Republic of Nigeria</strong>
+                <span>Commander-in-Chief of the Armed Forces</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NPC Chairman: text LEFT, image RIGHT -->
+        <div class="leadership-row reverse reveal reveal-delay-1">
+          <div class="leadership-body">
+            <div class="quote-mark quote-mark--gold">&ldquo;</div>
+            <blockquote>
+              The NPC DeedPoll Portal represents a landmark achievement in Nigeria's civil registration and vital statistics infrastructure. For the first time, citizens across all 36 states and the FCT can register a legal change of name through a single, unified, government-authorised platform — virtually or in person. This project was designed with the Nigerian citizen at its centre: reducing bureaucratic friction, eliminating the need for multiple agency visits, and issuing verifiable certificates that are recognised nationwide. The Nigeria Population Commission is proud to lead this initiative and remains committed to continuous improvement of our digital civil registration services.
+            </blockquote>
+            <div class="leadership-attribution">
+              <div class="attr-line attr-line--gold"></div>
+              <div>
+                <strong>Chairman, Nigeria Population Commission</strong>
+                <span>Federal Commissioner &amp; Chief Executive Officer</span>
+              </div>
+            </div>
+          </div>
+          <div class="leadership-img-wrap">
+            <img src="image/NasirKwarra.jpg" alt="Nasir Isa Kwarra, Federal Commissioner and CEO, Nigeria Population Commission" class="leadership-photo" />
+            <div class="leadership-badge npc-badge">
+              <span>Nigeria Population Commission</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ═══════════════════════════════════════════
+       SERVICE CARDS
+  ═══════════════════════════════════════════ -->
+  <section id="services">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Registration Options</span>
+        <h2>How Would You Like to Register?</h2>
+        <p>Choose the registration method that works best for you. All routes are legally valid and result in an official NPC-issued certificate.</p>
+      </div>
+
+      <div class="cards-grid">
+
+        <!-- Card 1: Virtual -->
+        <div class="service-card reveal reveal-delay-1">
+          <div class="card-icon-wrap">🖥️</div>
+          <div class="card-tag">Online</div>
+          <h3>Virtual Registration</h3>
+          <p class="card-desc">Complete your entire registration from anywhere in Nigeria — no office visit required.</p>
+          <hr class="card-divider" />
+          <ol class="step-list">
+            <li>
+              <span class="step-num">1</span>
+              Deed Poll drafted and signed by a qualified lawyer
+            </li>
+            <li>
+              <span class="step-num">2</span>
+              Pay the required registration fees via the NPC portal
+            </li>
+            <li>
+              <span class="step-num">3</span>
+              Upload scanned Deed Poll, Affidavit &amp; Newspaper Publication
+            </li>
+            <li>
+              <span class="step-num">4</span>
+              Documents reviewed and verified by NPC Legal Services
+            </li>
+            <li>
+              <span class="step-num">5</span>
+              Official certificate delivered to your email address
+            </li>
+          </ol>
+        </div>
+
+        <!-- Card 2: In-Person (Featured) -->
+        <div class="service-card featured reveal reveal-delay-2">
+          <div class="card-icon-wrap">🏛️</div>
+          <div class="card-tag">Walk-in</div>
+          <h3>In-Person Registration</h3>
+          <p class="card-desc">Visit any NPC state office to submit your documents physically with the help of our staff.</p>
+          <hr class="card-divider" />
+          <ol class="step-list">
+            <li>
+              <span class="step-num">1</span>
+              Prepare all required documents (Deed Poll, Affidavit, Publication)
+            </li>
+            <li>
+              <span class="step-num">2</span>
+              Submit documents physically at any NPC state office
+            </li>
+            <li>
+              <span class="step-num">3</span>
+              Documents scanned and entered into the NPC system by staff
+            </li>
+            <li>
+              <span class="step-num">4</span>
+              Legal Services verifies and approves the application
+            </li>
+            <li>
+              <span class="step-num">5</span>
+              Certificate printed and sent to your registered email
+            </li>
+          </ol>
+        </div>
+
+        <!-- Card 3: Verification -->
+        <div class="service-card" id="verify" style="scroll-margin-top: 80px;">
+          <div class="card-icon-wrap reveal reveal-delay-3">✅</div>
+          <div class="card-tag reveal reveal-delay-3">Verification</div>
+          <h3 class="reveal reveal-delay-3">Certificate Verification</h3>
+          <p class="card-desc reveal reveal-delay-3">Verify the authenticity of any NPC-issued Deed Poll certificate quickly and securely.</p>
+          <hr class="card-divider reveal reveal-delay-3" />
+          <ol class="step-list reveal reveal-delay-3">
+            <li>
+              <span class="step-num">1</span>
+              Pay the certificate verification fee on the NPC portal
+            </li>
+            <li>
+              <span class="step-num">2</span>
+              Upload a scanned copy of the Deed Poll certificate
+            </li>
+            <li>
+              <span class="step-num">3</span>
+              NPC Legal Services cross-checks against the national register
+            </li>
+            <li>
+              <span class="step-num">4</span>
+              Receive a downloadable verification result report
+            </li>
+          </ol>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ═══════════════════════════════════════════
+       REQUIRED DOCUMENTS
+  ═══════════════════════════════════════════ -->
+  <section id="documents">
+    <div class="container">
+      <div class="documents-inner">
+
+        <div class="documents-left reveal">
+          <span class="section-label">Documentation</span>
+          <h2>What You'll Need</h2>
+          <p>
+            Ensure all documents are genuine, properly executed, and legible before submitting.
+            Incomplete applications may cause delays in processing.
+          </p>
+          <div class="doc-note">
+            <strong>Submission note:</strong> Supporting documents must be scanned at a minimum resolution of 300 DPI and uploaded via the NPC Portal, or submitted physically at any NPC state office nationwide.
+          </div>
+        </div>
+
+        <div class="checklist reveal reveal-delay-1">
+
+          <div class="checklist-item">
+            <div class="check-icon">
+              <svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg>
+            </div>
+            <div class="checklist-text">
+              <strong>Deed Poll</strong>
+              <span>Must be drafted and executed by a qualified Nigerian lawyer</span>
+            </div>
+          </div>
+
+          <div class="checklist-item">
+            <div class="check-icon">
+              <svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg>
+            </div>
+            <div class="checklist-text">
+              <strong>Affidavit of Change of Name</strong>
+              <span>Sworn before a Commissioner for Oaths or Notary Public</span>
+            </div>
+          </div>
+
+          <div class="checklist-item">
+            <div class="check-icon">
+              <svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg>
+            </div>
+            <div class="checklist-text">
+              <strong>Newspaper Publication</strong>
+              <span>Name change published in a newspaper of national circulation</span>
+            </div>
+          </div>
+
+          <div class="checklist-item optional">
+            <div class="check-icon">
+              <svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg>
+            </div>
+            <div class="checklist-text">
+              <strong>Attestation Certificate <span style="font-weight:400; color: var(--text-muted);">(Optional)</span></strong>
+              <span>Issued by a State Government or recognised body</span>
+            </div>
+          </div>
+
+          <div class="checklist-item optional">
+            <div class="check-icon">
+              <svg viewBox="0 0 16 16"><polyline points="2,8 6,12 14,4"/></svg>
+            </div>
+            <div class="checklist-text">
+              <strong>Birth Certificate <span style="font-weight:400; color: var(--text-muted);">(Optional)</span></strong>
+              <span>Original birth certificate as a supporting identity document</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ═══════════════════════════════════════════
+       PROCESS OVERVIEW
+  ═══════════════════════════════════════════ -->
+  <section id="process">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">The Process</span>
+        <h2>How It Works</h2>
+        <p>Your application follows a clear, transparent process from submission to certificate issuance.</p>
+      </div>
+
+      <div class="process-grid">
+        <div class="process-step reveal reveal-delay-1">
+          <div class="process-num">1</div>
+          <h4>Prepare Documents</h4>
+          <p>Have your Deed Poll drafted by a lawyer and gather all required supporting documents.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-2">
+          <div class="process-num">2</div>
+          <h4>Submit &amp; Pay</h4>
+          <p>Submit via the NPC portal online or in person at any state office and pay the applicable fee.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-3">
+          <div class="process-num">3</div>
+          <h4>Legal Review</h4>
+          <p>NPC Legal Services verifies all submitted documents against statutory requirements.</p>
+        </div>
+        <div class="process-step reveal" style="transition-delay: 0.46s;">
+          <div class="process-num">4</div>
+          <h4>Receive Certificate</h4>
+          <p>Your official NPC Deed Poll certificate is issued and delivered to your email.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FAQ
+  ═══════════════════════════════════════════ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Frequently Asked Questions</span>
+        <h2>Common Questions</h2>
+        <p>Everything you need to know about registering a Deed Poll through the NPC.</p>
+      </div>
+
+      <div class="faq-grid">
+
+        <div class="faq-item reveal reveal-delay-1">
+          <button class="faq-question" aria-expanded="false">
+            <span>What is a Deed Poll?</span>
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <p>A Deed Poll is a legal document that records a person's decision to abandon their former name and adopt a new one. It is drafted by a qualified lawyer and, once registered with the Nigeria Population Commission, is officially recognised for updating identity documents such as passports, driving licences, and bank records.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-2">
+          <button class="faq-question" aria-expanded="false">
+            <span>Who can apply for a Deed Poll?</span>
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Any Nigerian citizen aged 18 or above may apply. For applicants under 18, a parent or legal guardian must initiate the application on their behalf and provide supporting consent documentation.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-3">
+          <button class="faq-question" aria-expanded="false">
+            <span>Do I need a lawyer to draft my Deed Poll?</span>
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes. The NPC requires that all Deed Poll documents be drafted and signed by a qualified Nigerian lawyer. Self-drafted documents will not be accepted. Your lawyer will also assist with the accompanying Affidavit and can advise on the newspaper publication requirement.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-1">
+          <button class="faq-question" aria-expanded="false">
+            <span>What is the newspaper publication requirement?</span>
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Nigerian law requires that a change of name be published in a newspaper of national or wide circulation. This serves as a public notice of your name change. You must provide a clipping or scan of the published notice as part of your application. Your lawyer can arrange this publication on your behalf.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-2">
+          <button class="faq-question" aria-expanded="false">
+            <span>How long does the registration process take?</span>
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Processing times vary depending on the volume of applications being handled by NPC Legal Services at the time of submission. Once all documents have been verified and approved, your certificate will be issued and delivered to your registered email address. You may contact the Legal Services Department for a status update on your application.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-3">
+          <button class="faq-question" aria-expanded="false">
+            <span>What fees are involved?</span>
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Registration fees are payable through the NPC Portal. Separate fees apply for virtual registration, in-person registration, and certificate verification. Current fee schedules are published on the NPC website at <a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener">nationalpopulation.gov.ng</a>.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-1">
+          <button class="faq-question" aria-expanded="false">
+            <span>Can I use the certificate to update my passport or bank details?</span>
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes. An NPC-registered Deed Poll certificate is a legally recognised document in Nigeria. It is accepted by the Nigerian Immigration Service for passport amendments, by banks for account name changes, and by other government agencies and institutions requiring formal evidence of a name change.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-2">
+          <button class="faq-question" aria-expanded="false">
+            <span>What if my documents are rejected?</span>
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <p>If your application is rejected, you will be notified by email with the specific reason(s) for rejection. You may correct the identified issues and resubmit. Common reasons for rejection include illegible scans, missing documents, or discrepancies between the Deed Poll and the Affidavit. Contact the Legal Services Department if you require guidance.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ═══════════════════════════════════════════
+       CTA BANNER
+  ═══════════════════════════════════════════ -->
+  <section id="cta">
+    <div class="container">
+      <div class="cta-inner reveal">
+        <span class="section-label">Get Started Today</span>
+        <h2>Ready to register your change of name?</h2>
+        <p>Join thousands of Nigerians who have officially registered their change of name through the NPC DeedPoll Portal.</p>
+
+        <div class="cta-buttons">
+          <a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener" class="btn btn-gold">
+            Begin Registration on NPC Portal <span class="btn-arrow">→</span>
+          </a>
+          <a href="#verify" class="btn btn-outline-white">
+            Verify a Certificate
+          </a>
+        </div>
+
+        <p class="cta-help-link">
+          Need help? <a href="mailto:legal@nationalpopulation.gov.ng">Contact the Legal Services Department</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-top">
+
+        <div class="footer-brand">
+          <div class="footer-logo-row">
+            <div class="footer-logo-circle"><img src="image/NPCLogo.webp" alt="Nigeria Population Commission Logo" /></div>
+            <div class="footer-logo-text">
+              <strong>DeedPoll Portal</strong>
+              <span>Nigeria Population Commission</span>
+            </div>
+          </div>
+          <p class="footer-tagline">
+            Civil Registration and Vital Statistics (CRVS) Department — providing official identity services to all Nigerians.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Services</h5>
+          <ul>
+            <li><a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener">Virtual Registration</a></li>
+            <li><a href="#services">In-Person Registration</a></li>
+            <li><a href="#verify">Verify Certificate</a></li>
+            <li><a href="#documents">Required Documents</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Organisation</h5>
+          <ul>
+            <li><a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener">NPC Website</a></li>
+            <li><a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener">About NPC</a></li>
+            <li><a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener">State Offices</a></li>
+            <li><a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener">News &amp; Updates</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <ul>
+            <li><a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener">Privacy Policy</a></li>
+            <li><a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener">Terms of Service</a></li>
+            <li><a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener">Data Protection</a></li>
+            <li><a href="mailto:legal@nationalpopulation.gov.ng">Contact Legal</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 Nigeria Population Commission. All Rights Reserved. Federal Republic of Nigeria.</p>
+        <div class="footer-legal">
+          <a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener">Privacy Policy</a>
+          <a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener">Terms</a>
+          <a href="https://nationalpopulation.gov.ng" target="_blank" rel="noopener">NPC Website</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════
+       JAVASCRIPT
+  ═══════════════════════════════════════════ -->
+  <script>
+    // ── Navbar scroll shadow ──────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // ── Mobile menu toggle ────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const navMobile = document.getElementById('nav-mobile');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      navMobile.classList.toggle('open');
+    });
+
+    // Close mobile menu when a link is clicked
+    navMobile.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        navMobile.classList.remove('open');
+      });
+    });
+
+    // ── Scroll-reveal via Intersection Observer ─
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── FAQ accordion ────────────────────────
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const answer = btn.nextElementSibling;
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+        // Close all others in same column
+        document.querySelectorAll('.faq-question').forEach(other => {
+          if (other !== btn) {
+            other.setAttribute('aria-expanded', 'false');
+            other.nextElementSibling.classList.remove('open');
+          }
+        });
+
+        btn.setAttribute('aria-expanded', !isOpen);
+        answer.classList.toggle('open', !isOpen);
+      });
+    });
+
+    // ── Active nav link on scroll ─────────────
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links li a');
+
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+              link.style.color = link.getAttribute('href') === `#${id}`
+                ? 'var(--gold)'
+                : '';
+            });
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    sections.forEach(section => sectionObserver.observe(section));
+
+    // ── Hero word flip ────────────────────────
+    (function () {
+      const words = ['Officially.', 'Legally.', 'Registered.', 'Verified.'];
+      const el = document.getElementById('flipWord');
+      if (!el) return;
+      let idx = 0;
+
+      function flip() {
+        idx = (idx + 1) % words.length;
+
+        // flip out
+        el.classList.add('flip-out');
+
+        setTimeout(() => {
+          el.textContent = words[idx];
+          el.classList.remove('flip-out');
+          el.classList.add('flip-in');
+
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              el.classList.remove('flip-in');
+            });
+          });
+        }, 260);
+      }
+
+      setInterval(flip, 2800);
+    })();
+  </script>
+</body>
+</html>
